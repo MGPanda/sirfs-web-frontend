@@ -1,0 +1,28 @@
+.c-class {
+  margin-top: 5rem;
+
+  &__name {
+    text-align: center;
+  }
+
+  &__description {
+    margin-top: 2rem;
+  }
+
+  &__equippables {
+    margin-top: 2rem;
+  }
+
+  &__skills {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__skill {
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+}
