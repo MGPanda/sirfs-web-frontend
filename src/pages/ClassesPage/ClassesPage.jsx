@@ -9,6 +9,7 @@ export function ClassesPage() {
     const getClasses = () => {
         API.get('api/class').then((res) => {
             console.log(res);
+            console.log(process.env.REACT_APP_BACK_URL);
             setClasses(res);
         })
     }
