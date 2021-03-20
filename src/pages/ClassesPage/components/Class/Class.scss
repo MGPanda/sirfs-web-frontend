@@ -1,5 +1,20 @@
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
 .c-class {
   margin-top: 5rem;
+
+  * {
+    animation: appear 0.2s;
+  }
 
   &__name {
     text-align: center;
@@ -13,16 +28,18 @@
     margin-top: 2rem;
   }
 
-  &__skills {
+  &__skillset {
     margin-top: 2rem;
+    text-align: center;
+  }
+
+  &__level {
+    margin-top: 2rem;
+  }
+
+  &__skills {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
-
-  &__skill {
-    margin-top: 1rem;
-    width: 100%;
-    text-align: center;
   }
 }
