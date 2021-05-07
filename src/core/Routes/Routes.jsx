@@ -7,7 +7,7 @@ import {RacesPage} from "../../pages/RacesPage/RacesPage";
 export function Routes() {
     return(
         <Switch>
-            <Route path={"/create-character"}>
+            <Route path={"/create-character/:edition"}>
                 <CharacterCreationPage/>
             </Route>
             <Route path={"/class"}>

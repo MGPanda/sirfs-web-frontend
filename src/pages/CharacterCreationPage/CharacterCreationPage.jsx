@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 import './CharacterCreationPage.scss';
 
 export function CharacterCreationPage(props) {
-    const [char, setChar] = useState({
-        name: '',
-        race: null,
+    // const {edition} = useParams();
 
-    });
+    const [char] = useState({});
 
     const handleSubmit = () => {
 
