@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import {ClassesPage} from "../../pages/ClassesPage/ClassesPage";
 import {CharacterCreationPage} from "../../pages/CharacterCreationPage/CharacterCreationPage";
+import {RacesPage} from "../../pages/RacesPage/RacesPage";
 
 export function Routes() {
     return(
@@ -11,6 +12,9 @@ export function Routes() {
             </Route>
             <Route path={"/class"}>
                 <ClassesPage/>
+            </Route>
+            <Route path={"/race"}>
+                <RacesPage/>
             </Route>
             <Route exact path={"/"}>
                 <h1>Home</h1>

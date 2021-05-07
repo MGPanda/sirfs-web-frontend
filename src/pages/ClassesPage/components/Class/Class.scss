@@ -1,4 +1,4 @@
-@-webkit-keyframes appear {
+@keyframes appear {
   0% {
     opacity: 0;
     transform: translateY(-50px);
@@ -10,10 +10,11 @@
 }
 
 .c-class {
-  margin-top: 5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 
   * {
-    -webkit-animation: appear 0.2s;
+    animation: appear 0.2s;
   }
 
   &__name {
