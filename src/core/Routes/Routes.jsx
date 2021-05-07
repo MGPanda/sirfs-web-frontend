@@ -1,10 +1,14 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import {ClassesPage} from "../../pages/ClassesPage/ClassesPage";
+import {CharacterCreationPage} from "../../pages/CharacterCreationPage/CharacterCreationPage";
 
 export function Routes() {
     return(
         <Switch>
+            <Route path={"/create-character"}>
+                <CharacterCreationPage/>
+            </Route>
             <Route path={"/class"}>
                 <ClassesPage/>
             </Route>

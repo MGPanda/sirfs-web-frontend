@@ -1,8 +1,19 @@
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
 .c-class {
   margin-top: 5rem;
 
   * {
-    animation: appear 0.2s;
+    -webkit-animation: appear 0.2s;
   }
 
   &__name {
@@ -30,16 +41,5 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
-}
-
-@keyframes appear {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  100% {
-    opacity: 100%;
-    transform: translateY(0);
   }
 }
