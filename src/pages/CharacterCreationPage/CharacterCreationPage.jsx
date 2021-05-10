@@ -27,24 +27,36 @@ export function CharacterCreationPage(props) {
 
     }
 
+    const handleChange = (event) => {
+        char[event.target.name] = event.target.value;
+        console.log(char);
+    }
+
     useEffect(getFullInfo, [edition]);
 
-    return(
+    return (
         <div className={"p-character-creation"}>
-            <form onSubmit={handleSubmit}>
-                <input value={char.name} placeholder={"Nombre de tu personaje"}/>
-                <select value={char.race}>
-                    {classes.map((currentClass, i) => <option>
-                        {currentClass.name}
-                    </option>)}
-                </select>
-
-                <select value={char.race}>
-                    {races.map((race, i) => <option>
-                        {race.name}
-                    </option>)}
-                </select>
-            </form>
+            <div className={"container"}>
+                <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
+                    <input value={char.name} placeholder={"Nombre de tu personaje"} name={"name"}/><br/>
+                    <select value={char.race} name={"class"}>
+                        {classes.map((currentClass, i) => <option key={i}>
+                            {currentClass.name}
+                        </option>)}
+                    </select><br/>
+                    <select value={char.race} name={"race"}>
+                        {races.map((race, i) => <option key={i}>
+                            {race.name}
+                        </option>)}
+                    </select>
+                    {/*{char.race && <div className={"c-race__base-stats"}>*/}
+                    {/*    {Object.keys(races[char.race]).map((stat, i) => <div key={i} className={"c-race__stat"}>*/}
+                    {/*        <h3>{stat.toUpperCase()}</h3>*/}
+                    {/*        <h3>{races[char.race].baseStats[stat]}</h3>*/}
+                    {/*    </div>)}*/}
+                    {/*</div>}*/}
+                </form>
+            </div>
         </div>
     )
 }
