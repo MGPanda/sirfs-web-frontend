@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
@@ -8,6 +9,10 @@ export function CharacterCreationPage(props) {
     const {edition} = useParams();
 
     const [char] = useState({});
+    const [race, setRace] = useState({
+        baseStats: []
+    });
+
     const [classes, setClasses] = useState([]);
     const [races, setRaces] = useState([]);
 
@@ -20,6 +25,7 @@ export function CharacterCreationPage(props) {
         API.get(`api/race/${edition}`).then((res) => {
             res.data.races.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
             setRaces(res.data.races);
+            setRace(res.data.races[0]);
         });
     }
 
@@ -29,32 +35,40 @@ export function CharacterCreationPage(props) {
 
     const handleChange = (event) => {
         char[event.target.name] = event.target.value;
-        console.log(char);
     }
 
-    useEffect(getFullInfo, [edition]);
+    const handleChangeRace = (event) => {
+        for (let i = 0; i < races.length; i++) {
+            if (races[i].name === event.target.value) {
+                setRace(races[i]);
+            }
+        }
+    }
+
+    useEffect(getFullInfo, []);
 
     return (
         <div className={"p-character-creation"}>
             <div className={"container"}>
                 <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
                     <input value={char.name} placeholder={"Nombre de tu personaje"} name={"name"}/><br/>
-                    <select value={char.race} name={"class"}>
+                    <select value={char.class} name={"class"}>
                         {classes.map((currentClass, i) => <option key={i}>
                             {currentClass.name}
                         </option>)}
                     </select><br/>
-                    <select value={char.race} name={"race"}>
+                    <select value={char.race} name={"race"} onChange={handleChangeRace}>
                         {races.map((race, i) => <option key={i}>
                             {race.name}
                         </option>)}
                     </select>
-                    {/*{char.race && <div className={"c-race__base-stats"}>*/}
-                    {/*    {Object.keys(races[char.race]).map((stat, i) => <div key={i} className={"c-race__stat"}>*/}
-                    {/*        <h3>{stat.toUpperCase()}</h3>*/}
-                    {/*        <h3>{races[char.race].baseStats[stat]}</h3>*/}
-                    {/*    </div>)}*/}
-                    {/*</div>}*/}
+                    <button type={"submit"}>Crear personaje</button>
+                    <div className={"p-character-creation__stats"}>
+                        {Object.keys(race.baseStats).map((stat, i) => <div key={i} className={"p-character-creation__stat"}>
+                            <h3>{stat.toUpperCase()}</h3>
+                            <h3>{race.baseStats[stat]}</h3>
+                        </div>)}
+                    </div>
                 </form>
             </div>
         </div>

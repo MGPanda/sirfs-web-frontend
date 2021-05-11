@@ -3,4 +3,8 @@ body {
   font-family: Footlight MT Light, serif;
   color: white;
   background: #111111;
+
+  * {
+    animation: appear 0.2s;
+  }
 }

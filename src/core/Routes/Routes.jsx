@@ -4,6 +4,8 @@ import {ClassesPage} from "../../pages/ClassesPage/ClassesPage";
 import {CharacterCreationPage} from "../../pages/CharacterCreationPage/CharacterCreationPage";
 import {RacesPage} from "../../pages/RacesPage/RacesPage";
 import {RegisterPage} from "../../pages/RegisterPage/RegisterPage";
+import {Page404} from "../../shared/pages/Page404/Page404";
+import {LoginPage} from "../../pages/LoginPage/LoginPage";
 
 export function Routes() {
     return(
@@ -13,6 +15,9 @@ export function Routes() {
             </Route>
             <Route path={"/class"}>
                 <ClassesPage/>
+            </Route>
+            <Route path={"/login"}>
+                <LoginPage/>
             </Route>
             <Route path={"/race"}>
                 <RacesPage/>
@@ -24,7 +29,7 @@ export function Routes() {
                 <h1>Home</h1>
             </Route>
             <Route path={"*"}>
-                <h1>404</h1>
+                <Page404/>
             </Route>
         </Switch>
     )

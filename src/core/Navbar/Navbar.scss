@@ -1,0 +1,23 @@
+@import '../../styles/tools/variable.tools';
+
+.c-navbar {
+  position: absolute;
+  font-weight: bold;
+  overflow-x: scroll;
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+
+  a {
+    color: white;
+    text-decoration: none;
+    padding: 2rem;
+    display: block;
+  }
+
+  .selected {
+    color: $color-blue;
+    font-style: italic;
+    text-decoration: underline;
+  }
+}

@@ -1,22 +1,7 @@
-@keyframes appear {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  100% {
-    opacity: 100%;
-    transform: translateY(0);
-  }
-}
-
 .c-race {
-  margin-top: 2.5rem;
+  padding-top: 10rem;
   margin-bottom: 2.5rem;
   text-align: center;
-
-  * {
-    animation: appear 0.2s;
-  }
 
   &__description {
     margin-top: 2rem;
@@ -46,23 +31,4 @@
   &__skill {
     margin-top: 1rem;
   }
-  //
-  //&__equippables {
-  //  margin-top: 2rem;
-  //}
-  //
-  //&__skillset {
-  //  margin-top: 2rem;
-  //  text-align: center;
-  //}
-  //
-  //&__level {
-  //  margin-top: 2rem;
-  //}
-  //
-  //&__skills {
-  //  display: flex;
-  //  flex-wrap: wrap;
-  //  justify-content: center;
-  //}
 }

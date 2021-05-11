@@ -1,21 +1,6 @@
-@keyframes appear {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  100% {
-    opacity: 100%;
-    transform: translateY(0);
-  }
-}
-
 .c-class {
-  margin-top: 2.5rem;
+  padding-top: 10rem;
   margin-bottom: 2.5rem;
-
-  * {
-    animation: appear 0.2s;
-  }
 
   &__name {
     text-align: center;
