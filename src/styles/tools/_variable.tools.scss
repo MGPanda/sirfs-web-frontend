@@ -15,3 +15,25 @@ $color-blue: #0074D9;
     transform: translateY(0);
   }
 }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
