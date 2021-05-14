@@ -23,7 +23,7 @@ export function RegisterPage() {
             setPasswordsDontMatch(true);
             return;
         }
-        API.post('user', user).then((res) => {});
+        API.post('register', user).then((res) => {});
     }
 
     const handleChange = (event) => {
