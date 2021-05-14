@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './Navbar.scss';
 import {NavLink} from "react-router-dom";
 
 export function Navbar() {
-    return(
+    const [token] = useState(localStorage.getItem('token'));
+
+    return (
         <div className={"c-navbar"}>
             <NavLink exact to={"/"} activeClassName={"selected"}>Home</NavLink>
-            <NavLink to={"/register"} activeClassName={"selected"}>Register</NavLink>
-            <NavLink to={"/login"} activeClassName={"selected"}>Login</NavLink>
+            {token === null && <NavLink to={"/register"} activeClassName={"selected"}>Register</NavLink>}
+            {token === null && <NavLink to={"/login"} activeClassName={"selected"}>Login</NavLink>}
+            {token !== null && <NavLink to={"/logout"} activeClassName={"selected"}>Logout</NavLink>}
             <NavLink exact to={"/create-character/1e"} activeClassName={"selected"}>1e</NavLink>
             <NavLink exact to={"/create-character/2e"} activeClassName={"selected"}>2e</NavLink>
             <NavLink to={"/class"} activeClassName={"selected"}>Clases</NavLink>

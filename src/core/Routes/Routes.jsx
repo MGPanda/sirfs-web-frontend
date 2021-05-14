@@ -6,6 +6,7 @@ import {RacesPage} from "../../pages/RacesPage/RacesPage";
 import {RegisterPage} from "../../pages/RegisterPage/RegisterPage";
 import {Page404} from "../../shared/pages/Page404/Page404";
 import {LoginPage} from "../../pages/LoginPage/LoginPage";
+import {LogoutPage} from "../../pages/LogoutPage/LogoutPage";
 
 export function Routes() {
     return(
@@ -18,6 +19,9 @@ export function Routes() {
             </Route>
             <Route path={"/login"}>
                 <LoginPage/>
+            </Route>
+            <Route path={"/logout"}>
+                <LogoutPage/>
             </Route>
             <Route path={"/race"}>
                 <RacesPage/>
