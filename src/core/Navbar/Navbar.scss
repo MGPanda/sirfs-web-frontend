@@ -1,12 +1,26 @@
 @import '../../styles/tools/variable.tools';
 
 .c-navbar {
-  position: absolute;
+  position: fixed;
   font-weight: bold;
-  overflow-x: scroll;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100vw;
+  background-color: #111111;
+
+  &__title {
+    padding-left: 1rem;
+    width: 25%;
+    color: $color-blue;
+  }
+
+  &__links {
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+  }
 
   a {
     color: white;

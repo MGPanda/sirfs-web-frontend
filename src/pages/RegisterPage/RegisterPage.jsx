@@ -5,10 +5,13 @@ import {API} from "../../shared/const/api.const";
 
 export function RegisterPage() {
 
+    // eslint-disable-next-line no-control-regex
+    const passwordRegex = new RegExp('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])');
+
     const [user] = useState({});
     const [usernameExists, setUsernameExists] = useState(false);
     const [emailExists, setEmailExists] = useState(false);
-    const [invalidEmail, setinvalidEmail] = useState(false);
+    const [invalidEmail, setInvalidEmail] = useState(false);
     const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
 
     const handleSubmit = (event) => {
@@ -16,14 +19,35 @@ export function RegisterPage() {
 
         setUsernameExists(false);
         setEmailExists(false);
-        setinvalidEmail(false);
+        setInvalidEmail(false);
         setPasswordsDontMatch(false);
+
+        if (!passwordRegex.exec(user.email)) {
+            setInvalidEmail(true);
+            return;
+        }
 
         if (user.password !== user.confirmPassword) {
             setPasswordsDontMatch(true);
             return;
         }
-        API.post('register', user).then((res) => {});
+        API.post('register', user).then((res) => {
+            if (res.data.error && res.data.username) {
+                setUsernameExists(true);
+            } else if (res.data.error && res.data.email) {
+                setEmailExists(true);
+            } else {
+                API.post('login', user).then((res) => {
+                    localStorage.setItem('userData', JSON.stringify(res.data.userData));
+                    localStorage.setItem('token', res.data.token);
+                    const user = localStorage.getItem('userData');
+
+                    if (user) {
+                        window.location.href = '/';
+                    }
+                });
+            }
+        });
     }
 
     const handleChange = (event) => {

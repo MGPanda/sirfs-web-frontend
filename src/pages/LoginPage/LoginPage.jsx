@@ -18,7 +18,9 @@ export function LoginPage() {
             if (user) {
                 window.location.href = '/';
             }
-        });
+        }).catch((err) => {
+
+        })
     }
 
     const handleChange = (event) => {

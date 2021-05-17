@@ -7,6 +7,7 @@ import {RegisterPage} from "../../pages/RegisterPage/RegisterPage";
 import {Page404} from "../../shared/pages/Page404/Page404";
 import {LoginPage} from "../../pages/LoginPage/LoginPage";
 import {LogoutPage} from "../../pages/LogoutPage/LogoutPage";
+import {HomePage} from "../../pages/HomePage/HomePage";
 
 export function Routes() {
     return(
@@ -30,7 +31,7 @@ export function Routes() {
                 <RegisterPage/>
             </Route>
             <Route exact path={"/"}>
-                <h1>Home</h1>
+                <HomePage/>
             </Route>
             <Route path={"*"}>
                 <Page404/>

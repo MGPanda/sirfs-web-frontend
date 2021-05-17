@@ -13,6 +13,8 @@ export function CharacterCreationPage(props) {
         baseStats: []
     });
 
+    const [thisClass, setThisClass] = useState({});
+
     const [classes, setClasses] = useState([]);
     const [races, setRaces] = useState([]);
 
@@ -20,6 +22,7 @@ export function CharacterCreationPage(props) {
         API.get(`api/class/${edition}`).then((res) => {
             res.data.classes.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
             setClasses(res.data.classes);
+            setThisClass(res.data.classes[0]);
         });
 
         API.get(`api/race/${edition}`).then((res) => {
@@ -38,11 +41,12 @@ export function CharacterCreationPage(props) {
     }
 
     const handleChangeRace = (event) => {
-        for (let i = 0; i < races.length; i++) {
-            if (races[i].name === event.target.value) {
-                setRace(races[i]);
-            }
-        }
+        setRace(races[event.target.selectedIndex]);
+    }
+
+    const handleChangeClass = (event) => {
+        setThisClass(classes[event.target.selectedIndex]);
+
     }
 
     useEffect(getFullInfo, []);
@@ -52,23 +56,26 @@ export function CharacterCreationPage(props) {
             <div className={"container"}>
                 <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
                     <input value={char.name} placeholder={"Nombre de tu personaje"} name={"name"}/><br/>
-                    <select value={char.class} name={"class"}>
+                    <select value={char.class} name={"class"} onChange={handleChangeClass}>
                         {classes.map((currentClass, i) => <option key={i}>
                             {currentClass.name}
                         </option>)}
-                    </select><br/>
+                    </select>
+                    <p><em>{thisClass.description}</em></p>
                     <select value={char.race} name={"race"} onChange={handleChangeRace}>
                         {races.map((race, i) => <option key={i}>
                             {race.name}
                         </option>)}
                     </select>
-                    <button type={"submit"}>Crear personaje</button>
+                    <p><em>{race.description}</em></p>
                     <div className={"p-character-creation__stats"}>
-                        {Object.keys(race.baseStats).map((stat, i) => <div key={i} className={"p-character-creation__stat"}>
+                        {Object.keys(race.baseStats).map((stat, i) => <div key={i}
+                                                                           className={"p-character-creation__stat"}>
                             <h3>{stat.toUpperCase()}</h3>
                             <h3>{race.baseStats[stat]}</h3>
                         </div>)}
                     </div>
+                    <button type={"submit"}>Crear personaje</button>
                 </form>
             </div>
         </div>
