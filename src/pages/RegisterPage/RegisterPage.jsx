@@ -61,7 +61,6 @@ export function RegisterPage() {
 
     const login = () => {
         if (Object.keys(errors).length === 0) {
-            console.log(Object.keys(errors).length);
             LoginComponent(user).then((res) => {
                 const user = localStorage.getItem('userData');
                 if (user) {
@@ -92,17 +91,17 @@ export function RegisterPage() {
         <div className={"p-register"}>
             <div className={"container"}>
                 <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
-                    <input defaultValue={user.username} placeholder={"Nombre de usuario"} name={"username"}/><br/>
+                    <input defaultValue={user.username} placeholder={"Nombre de usuario"} name={"username"}/>
                     {errors.noUsername && <p className={"c-form__warning"}>{errors.noUsername}</p>}
                     {errors.usernameExists && <p className={"c-form__warning"}>{errors.usernameExists}</p>}
-                    <input defaultValue={user.email} placeholder={"Correo electrónico"} name={"email"}/><br/>
+                    <input defaultValue={user.email} placeholder={"Correo electrónico"} name={"email"}/>
                     {errors.noEmail && <p className={"c-form__warning"}>{errors.noEmail}</p>}
                     {errors.invalidEmail && <p className={"c-form__warning"}>{errors.invalidEmail}</p>}
                     {errors.emailExists && <p className={"c-form__warning"}>{errors.emailExists}</p>}
-                    <input defaultValue={user.password} type={"password"} placeholder={"Contraseña"} name={"password"}/><br/>
+                    <input defaultValue={user.password} type={"password"} placeholder={"Contraseña"} name={"password"}/>
                     {errors.noPassword && <p className={"c-form__warning"}>{errors.noPassword}</p>}
                     <input defaultValue={user.confirmPassword} type={"password"} placeholder={"Confirmar contraseña"}
-                           name={"confirmPassword"}/><br/>
+                           name={"confirmPassword"}/>
                     {errors.passwordsDontMatch && <p className={"c-form__warning"}>{errors.passwordsDontMatch}</p>}
                     <button type={"submit"}>Registrarse</button>
                 </form>

@@ -2,10 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5rem 0;
+  padding: 10rem 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  * {
-    margin-top: 2rem;
+  .container {
+    background-color: rgba(17, 17, 17, 0.8);
   }
 
   &__stats {
@@ -14,9 +17,17 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
 
   &__stat {
     width: 20%;
+  }
+
+  &__img {
+    border-radius: 100%;
+    object-fit: cover;
+    width: 23.4375rem;
+    height: 23.4375rem;
   }
 }

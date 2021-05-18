@@ -5,30 +5,39 @@ import {useParams} from 'react-router-dom';
 import './CharacterCreationPage.scss';
 import {API} from "../../shared/const/api.const";
 
-export function CharacterCreationPage(props) {
+export function CharacterCreationPage() {
     const {edition} = useParams();
 
-    const [char] = useState({});
-    const [race, setRace] = useState({
-        baseStats: []
+    const [char, setChar] = useState({
+        class: {},
+        race: {
+            baseStats: [],
+        },
     });
 
-    const [thisClass, setThisClass] = useState({});
+    const [backgroundImg, setBackgroundImg] = useState();
 
     const [classes, setClasses] = useState([]);
     const [races, setRaces] = useState([]);
 
     const getFullInfo = () => {
-        API.get(`api/class/${edition}`).then((res) => {
+        API.get(`api/class/${edition}`).then((res = {
+            classes: []
+        }) => {
             res.data.classes.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
             setClasses(res.data.classes);
-            setThisClass(res.data.classes[0]);
-        });
-
-        API.get(`api/race/${edition}`).then((res) => {
-            res.data.races.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-            setRaces(res.data.races);
-            setRace(res.data.races[0]);
+            char.class = res.data.classes[Math.floor(Math.random() * res.data.classes.length)];
+        }).then(() => {
+            API.get(`api/race/${edition}`).then((res = {
+                races: []
+            }) => {
+                res.data.races.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+                setRaces(res.data.races);
+                setChar({
+                    ...char,
+                    'race': res.data.races[Math.floor(Math.random() * res.data.races.length)],
+                });
+            });
         });
     }
 
@@ -37,42 +46,66 @@ export function CharacterCreationPage(props) {
     }
 
     const handleChange = (event) => {
-        char[event.target.name] = event.target.value;
+
+        const currentVal = event.target.name;
+
+        switch (currentVal) {
+            case "race":
+                setChar({
+                    ...char,
+                    "race": races[event.target.selectedIndex],
+                });
+                break;
+            case "class":
+                setChar({
+                    ...char,
+                    "class": classes[event.target.selectedIndex],
+                });
+                break;
+            default:
+                setChar({
+                    ...char,
+                    [event.target.name]: event.target.value,
+                });
+                break;
+        }
     }
 
-    const handleChangeRace = (event) => {
-        setRace(races[event.target.selectedIndex]);
-    }
-
-    const handleChangeClass = (event) => {
-        setThisClass(classes[event.target.selectedIndex]);
-
+    const updateBackgroundImg = () => {
+        if (char.class.img !== undefined) {
+            setBackgroundImg(require("../../assets/img/class-icons/" + char.class.img).default);
+        }
     }
 
     useEffect(getFullInfo, []);
+    useEffect(updateBackgroundImg, [char.class]);
 
     return (
-        <div className={"p-character-creation"}>
+        <div className={"p-character-creation"}
+             style={{backgroundImage: "url('" + backgroundImg + "')"}}
+        >
             <div className={"container"}>
                 <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
-                    <input value={char.name} placeholder={"Nombre de tu personaje"} name={"name"}/><br/>
-                    <select value={char.class} name={"class"} onChange={handleChangeClass}>
+                    <img src={"https://mural.uv.es/igilgir/images/AIDA/chema.jpg"} alt={"Retrato de " + char.name}
+                         className={"p-character-creation__img"}/>
+                    <input defaultValue={char.name} placeholder={"Nombre de tu personaje"} name={"name"}/>
+                    <select value={char.class.name} name={"class"} onChange={handleChange}>
                         {classes.map((currentClass, i) => <option key={i}>
                             {currentClass.name}
                         </option>)}
                     </select>
-                    <p><em>{thisClass.description}</em></p>
-                    <select value={char.race} name={"race"} onChange={handleChangeRace}>
+                    {char.class.description && <p><em>{char.class.description}</em></p>}
+                    <select value={char.race.name} name={"race"} onChange={handleChange}>
                         {races.map((race, i) => <option key={i}>
                             {race.name}
                         </option>)}
                     </select>
-                    <p><em>{race.description}</em></p>
+                    {char.race.description && <p><em>{char.race.description}</em></p>}
                     <div className={"p-character-creation__stats"}>
-                        {Object.keys(race.baseStats).map((stat, i) => <div key={i}
-                                                                           className={"p-character-creation__stat"}>
+                        {Object.keys(char.race.baseStats).map((stat, i) => <div key={i}
+                                                                                className={"p-character-creation__stat"}>
                             <h3>{stat.toUpperCase()}</h3>
-                            <h3>{race.baseStats[stat]}</h3>
+                            <h3>{char.race.baseStats[stat]}</h3>
                         </div>)}
                     </div>
                     <button type={"submit"}>Crear personaje</button>

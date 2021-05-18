@@ -14,7 +14,7 @@ export function Navbar() {
                 {token === null && <NavLink to={"/login"} activeClassName={"selected"}>Login</NavLink>}
                 {token !== null && <NavLink to={"/logout"} activeClassName={"selected"}>Logout</NavLink>}
                 {token !== null && <NavLink exact to={"/create-character/1e"} activeClassName={"selected"}>1e</NavLink>}
-                {token !== null && <NavLink exact to={"/create-character/2e"} activeClassName={"selected"}>2e</NavLink>}
+                {/*{token !== null && <NavLink exact to={"/create-character/2e"} activeClassName={"selected"}>2e</NavLink>}*/}
                 <NavLink to={"/class"} activeClassName={"selected"}>Clases</NavLink>
                 <NavLink to={"/race"} activeClassName={"selected"}>Razas</NavLink>
             </div>
