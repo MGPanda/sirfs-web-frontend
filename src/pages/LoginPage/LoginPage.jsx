@@ -73,10 +73,10 @@ export function LoginPage() {
         <div className={"p-login"}>
             <div className={"container"}>
                 <form className={"c-form"} onSubmit={handleSubmit} onChange={handleChange}>
-                    <input defaultValue={user.email} placeholder={"Correo electrónico"} name={"email"}/><br/>
+                    <input defaultValue={user.email} placeholder={"Correo electrónico"} name={"email"}/>
                     {errors.noEmail && <p className={"c-form__warning"}>{errors.noEmail}</p>}
                     {errors.invalidEmail && <p className={"c-form__warning"}>{errors.invalidEmail}</p>}
-                    <input defaultValue={user.password} type={"password"} placeholder={"Contraseña"} name={"password"}/><br/>
+                    <input defaultValue={user.password} type={"password"} placeholder={"Contraseña"} name={"password"}/>
                     {errors.noPassword && <p className={"c-form__warning"}>{errors.noPassword}</p>}
                     {errors.wrongCombination && <p className={"c-form__warning"}>{errors.wrongCombination}</p>}
                     <button type={"submit"}>Iniciar sesión</button>

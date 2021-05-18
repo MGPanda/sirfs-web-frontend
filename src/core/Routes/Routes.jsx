@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Switch} from "react-router-dom";
 import {ClassesPage} from "../../pages/ClassesPage/ClassesPage";
 import {CharacterCreationPage} from "../../pages/CharacterCreationPage/CharacterCreationPage";
@@ -10,16 +10,27 @@ import {LogoutPage} from "../../pages/LogoutPage/LogoutPage";
 import {HomePage} from "../../pages/HomePage/HomePage";
 
 export function Routes() {
+    const [user, setUser] = useState();
+
+    const isLoggedIn = () => {
+        const user = localStorage.getItem('userData');
+        if (user) {
+            setUser(user);
+        }
+    }
+
+    useEffect(isLoggedIn, []);
+
     return(
         <Switch>
             <Route path={"/create-character/:edition"}>
-                <CharacterCreationPage/>
+                {user ? <CharacterCreationPage/> : <Page404/>}
             </Route>
             <Route path={"/class"}>
                 <ClassesPage/>
             </Route>
             <Route path={"/login"}>
-                <LoginPage/>
+                {user ? <HomePage/> : <LoginPage/>}
             </Route>
             <Route path={"/logout"}>
                 <LogoutPage/>
@@ -28,7 +39,7 @@ export function Routes() {
                 <RacesPage/>
             </Route>
             <Route path={"/register"}>
-                <RegisterPage/>
+                {user ? <HomePage/> : <RegisterPage/>}
             </Route>
             <Route exact path={"/"}>
                 <HomePage/>
