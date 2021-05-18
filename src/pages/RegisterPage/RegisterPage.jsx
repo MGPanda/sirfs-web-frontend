@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './RegisterPage.scss';
 import {API} from "../../shared/const/api.const";
@@ -16,53 +16,67 @@ export function RegisterPage() {
         confirmPassword: '',
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        'errors': true,
+    });
 
-    const validateErrors = async () => {
-        let errors = {};
+    const validateErrors = () => {
+        setErrors({});
+        let tempErrors = {};
 
         if (user.username === '') {
-            errors.noUsername = "Introduce un nombre de usuario.";
+            tempErrors.noUsername = "Introduce un nombre de usuario.";
         }
 
         if (user.email === '') {
-            errors.noEmail = "Introduce una dirección de correo.";
+            tempErrors.noEmail = "Introduce una dirección de correo.";
         } else if (!passwordRegex.exec(user.email)) {
-            errors.invalidEmail = "El correo no es válido.";
+            tempErrors.invalidEmail = "El correo no es válido.";
         }
 
         if (user.password === '') {
-            errors.noPassword = "Introduce una contraseña.";
+            tempErrors.noPassword = "Introduce una contraseña.";
         }
 
         if (user.password !== user.confirmPassword) {
-            errors.passwordsDontMatch = "Las contraseñas no coinciden.";
+            tempErrors.passwordsDontMatch = "Las contraseñas no coinciden.";
         }
-        await API.post('register', user).then((res) => {
+
+        API.post('register', user).then((res) => {
             if (res.data.error && res.data.username) {
-                errors.usernameExists = "El usuario ya existe.";
+                setErrors({
+                    ...errors,
+                    'usernameExists': "El usuario ya existe.",
+                });
             } else if (res.data.error && res.data.email) {
-                errors.emailExists = "El correo ya está asociado a una cuenta.";
+                setErrors({
+                    ...errors,
+                    'emailExists': "El correo ya está asociado a una cuenta.",
+                });
             }
         });
 
-        setErrors(errors);
+        setErrors(tempErrors);
     };
+
+    const login = () => {
+        if (Object.keys(errors).length === 0) {
+            console.log(Object.keys(errors).length);
+            LoginComponent(user).then((res) => {
+                const user = localStorage.getItem('userData');
+                if (user) {
+                    window.location.href = '/';
+                }
+            });
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        validateErrors().then(r => {
-            if (Object.keys(errors).length === 0) {
-                LoginComponent(user).then((res) => {
-                    const user = localStorage.getItem('userData');
-                    if (user) {
-                        window.location.href = '/';
-                    }
-                });
-            }
-        });
+        validateErrors();
     }
+
 
     const handleChange = (event) => {
         setUser({
@@ -70,6 +84,9 @@ export function RegisterPage() {
             [event.target.name]: event.target.value,
         });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(login, [errors]);
 
     return (
         <div className={"p-register"}>

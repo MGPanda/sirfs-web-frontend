@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './LoginPage.scss';
 import {LoginComponent} from "../../shared/components/LoginComponent/LoginComponent";
@@ -13,9 +13,13 @@ export function LoginPage() {
         password: '',
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        'errors': true,
+    });
 
     const validateErrors = () => {
+        setErrors({});
+
         let errors = {};
 
         if (user.email === '') {
@@ -31,26 +35,28 @@ export function LoginPage() {
         setErrors(errors);
     }
 
-    const handleSubmit = async (event) => {
+    const login = () => {
+        if (Object.keys(errors).length === 0) {
+            LoginComponent(user).then((res) => {
+                if (res) {
+                    const user = localStorage.getItem('userData');
+                    if (user) {
+                        window.location.href = '/';
+                    }
+                } else {
+                    setErrors({
+                        ...errors,
+                        'wrongCombination': "El correo y la contraseña que has introducido no coinciden.",
+                    })
+                }
+            });
+        }
+    }
+
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         validateErrors();
-
-        if (Object.keys(errors).length === 0) {
-            const login = await LoginComponent(user);
-            if (login) {
-                const user = localStorage.getItem('userData');
-                if (user) {
-                    window.location.href = '/';
-                }
-            } else {
-                setErrors({
-                    ...errors,
-                    'wrongCombination': "El correo y la contraseña que has introducido no coinciden.",
-                })
-            }
-
-        }
     }
 
     const handleChange = (event) => {
@@ -59,6 +65,9 @@ export function LoginPage() {
             [event.target.name]: event.target.value,
         });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(login, [errors]);
 
     return (
         <div className={"p-login"}>
